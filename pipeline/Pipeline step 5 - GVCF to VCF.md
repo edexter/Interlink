@@ -7,13 +7,13 @@ This script calls variants from a GVCF file to produce a VCF output. Variants ar
 ````bash
 #!/bin/bash
 
-#SBATCH --job-name=GVCF2VCF_daph			    #Job name
+#SBATCH --job-name=GVCF2VCF_daph		#Job name
 #SBATCH --cpus-per-task=4                       #Number of cores reserved
 #SBATCH --mem-per-cpu=32G                       #Memory reserved per core.
                                                 #Total memory reserved: 128GB
 
-#SBATCH --time=168:00:00                         #Maximum time the job will run
-#SBATCH --qos=1week                              #The job queue (time based)
+#SBATCH --time=168:00:00                        #Maximum time the job will run
+#SBATCH --qos=1week                             #The job queue (time based)
 
 #This is the stdout file
 #SBATCH --output=/scicore/home/ebertd/dexter0000/interlink/logfiles/GVCF2VCF_daph_out_%A
