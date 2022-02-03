@@ -5,7 +5,8 @@ This script generates more extensive mapping statistics than the main bioinforma
 ````bash
 module load SAMtools/1.10-foss-2018b
 
-##########################################################################################Pasteuria stats
+#########################################################################################
+Pasteuria stats
 #########################################################################################
 #Extract the sample name from the filenames
 ls *_pasteuria_flagstat.txt | awk -F'[_.]' '{print $1}'
@@ -29,7 +30,8 @@ for i in *_pasteuria_coverage.txt; do
 awk 'NR==2{print $4,$5,$6,$7,$8,$9}' $i
 done
 
-##########################################################################################Daphnia stats
+#########################################################################################
+Daphnia stats
 #########################################################################################
 
 #Extract the sample name from the filenames
@@ -60,10 +62,5 @@ for i in *_daphnia_coverage.txt; do
 awk '{totalBases+=$3; coveredBases+=$5;} END {print coveredBases/totalBases;}' $i 
 done
 
-#Get contig names that very lower coverage width
-#? what was this line for again?
-awk '{
-if ($6<=0)
-	print $1;}' G207_daphnia_coverage.txt
 ````
 
