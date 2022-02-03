@@ -5,12 +5,12 @@ This script splits raw sequencer reads according to sample ID. It merges across 
 ````
 #!/bin/bash
 
-#SBATCH --job-name=read_renaming				#Job name
-#SBATCH --cpus-per-task=8	              #Number of cores reserved
+#SBATCH --job-name=read_renaming	#Job name
+#SBATCH --cpus-per-task=8	        #Number of cores reserved
 #SBATCH --mem-per-cpu=2G              	#Memory reserved per core.
-												                #Total memory reserved: 16GB
-#SBATCH --time=24:00:00	        				#Maximum time the job will run
-#SBATCH --qos=1day           					  #The job queue (time based)
+					#Total memory reserved: 16GB
+#SBATCH --time=24:00:00	        	#Maximum time the job will run
+#SBATCH --qos=1day           		#The job queue (time based)
 
 #This is the stdout file
 #SBATCH --output=/scicore/home/ebertd/dexter0000/interlink/logfiles/readRenameOut_%A_%a
