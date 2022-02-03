@@ -5,12 +5,12 @@ This script trims Illumina adaptors and performs light quality trimming using TR
 ````bash
 #!/bin/bash
 
-#SBATCH --job-name=read_trimming				#Job name
-#SBATCH --cpus-per-task=8	                  	#Number of cores reserved
-#SBATCH --mem-per-cpu=2G              			#Memory reserved per core.
-												#Total memory reserved: 16GB
-#SBATCH --time=24:00:00	        				#Maximum time the job will run
-#SBATCH --qos=1day           					#The job queue (time based)
+#SBATCH --job-name=read_trimming	#Job name
+#SBATCH --cpus-per-task=8	        #Number of cores reserved
+#SBATCH --mem-per-cpu=2G              	#Memory reserved per core.
+					#Total memory reserved: 16GB
+#SBATCH --time=24:00:00	        	#Maximum time the job will run
+#SBATCH --qos=1day           		#The job queue (time based)
 
 #This is the stdout file
 #SBATCH --output=/scicore/home/ebertd/dexter0000/interlink/logfiles/readTrim_%A_%a
