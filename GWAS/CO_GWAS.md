@@ -5,11 +5,10 @@ This bash script filters and formats the necessary input files for co-GWAS analy
 ````bash
 #!/bin/bash
 
-#SBATCH --job-name=plinkRun    			#Job name
+#SBATCH --job-name=plinkRun    		#Job name
 #SBATCH --cpus-per-task=20           	#Number of cores reserved
 #SBATCH --mem-per-cpu=2G            	#Memory reserved per core.
                                      	#Total memory reserved: 32GB
-
 #SBATCH --time=168:00:00            	#Maximum time the job will run
 #SBATCH --qos=1week                    	#The job queue (time based)
 
@@ -46,20 +45,26 @@ mkdir plink/"$RUN"/results
 ################################################################################
 
 #Create PLINK files
-/scicore/home/ebertd/dexter0000/plinkDev/plink2 --vcf vcfsDaphnia/daphnia_plink.vcf --make-bed --out plink/"$RUN"/daphnia --allow-extra-chr
+/scicore/home/ebertd/dexter0000/plinkDev/plink2 --vcf vcfsDaphnia/daphnia_plink.vcf \
+--make-bed --out plink/"$RUN"/daphnia --allow-extra-chr
 
-/scicore/home/ebertd/dexter0000/plinkDev/plink2 --vcf vcfsPasteuria/pasteuria_plink.vcf --make-bed --out plink/"$RUN"/pasteuria --allow-extra-chr
+/scicore/home/ebertd/dexter0000/plinkDev/plink2 --vcf vcfsPasteuria/pasteuria_plink.vcf \ 
+--make-bed --out plink/"$RUN"/pasteuria --allow-extra-chr
 
 #Filter missing genotypes
-/scicore/home/ebertd/dexter0000/plinkDev/plink2 --bfile plink/"$RUN"/daphnia --allow-extra-chr --geno 0.90 --make-bed --out plink/"$RUN"/daphnia.geno
+/scicore/home/ebertd/dexter0000/plinkDev/plink2 --bfile plink/"$RUN"/daphnia \
+--allow-extra-chr --geno 0.90 --make-bed --out plink/"$RUN"/daphnia.geno
 
-/scicore/home/ebertd/dexter0000/plinkDev/plink2 --bfile plink/"$RUN"/pasteuria --allow-extra-chr --geno 0.90 --make-bed --out plink/"$RUN"/pasteuria.geno
+/scicore/home/ebertd/dexter0000/plinkDev/plink2 --bfile plink/"$RUN"/pasteuria \
+--allow-extra-chr --geno 0.90 --make-bed --out plink/"$RUN"/pasteuria.geno
 
 #Filter missing individuals
-/scicore/home/ebertd/dexter0000/plinkDev/plink2 --bfile plink/"$RUN"/daphnia.geno --allow-extra-chr --mind 0.05 --make-bed --out plink/"$RUN"/daphnia.geno.mind
+/scicore/home/ebertd/dexter0000/plinkDev/plink2 --bfile plink/"$RUN"/daphnia.geno \
+--allow-extra-chr --mind 0.05 --make-bed --out plink/"$RUN"/daphnia.geno.mind
 
 #Filter missing individuals
-/scicore/home/ebertd/dexter0000/plinkDev/plink2 --bfile plink/"$RUN"/pasteuria.geno --allow-extra-chr --mind 0.75 --make-bed --out plink/"$RUN"/pasteuria.geno.mind
+/scicore/home/ebertd/dexter0000/plinkDev/plink2 --bfile plink/"$RUN"/pasteuria.geno \
+--allow-extra-chr --mind 0.75 --make-bed --out plink/"$RUN"/pasteuria.geno.mind
 
 #Filter daphnia samples based on daphnia relatedness
 /scicore/home/ebertd/dexter0000/plinkDev/plink2 --bfile plink/"$RUN"/daphnia.geno.mind \
@@ -74,22 +79,26 @@ mkdir plink/"$RUN"/results
 	--out plink/"$RUN"/pasteuria.geno.mind.king --allow-extra-chr    
 
 #Filter based on MAF
-/scicore/home/ebertd/dexter0000/plinkDev/plink2 --bfile plink/"$RUN"/daphnia.geno.mind.king --allow-extra-chr --maf 0.10 --mac 10 --make-bed --out plink/"$RUN"/daphnia.geno.mind.king.maf.LD
+/scicore/home/ebertd/dexter0000/plinkDev/plink2 --bfile plink/"$RUN"/daphnia.geno.mind.king \
+--allow-extra-chr --maf 0.10 --mac 10 --make-bed --out plink/"$RUN"/daphnia.geno.mind.king.maf.LD
 
-/scicore/home/ebertd/dexter0000/plinkDev/plink2 --bfile plink/"$RUN"/pasteuria.geno.mind.king --allow-extra-chr --maf 0.10 --mac 10 --make-bed --out plink/"$RUN"/pasteuria.geno.mind.king.maf.LD
+/scicore/home/ebertd/dexter0000/plinkDev/plink2 --bfile plink/"$RUN"/pasteuria.geno.mind.king \
+--allow-extra-chr --maf 0.10 --mac 10 --make-bed --out plink/"$RUN"/pasteuria.geno.mind.king.maf.LD
 
 #Filter based on LD
 /scicore/home/ebertd/dexter0000/plinkDev/plink2 --bfile plink/"$RUN"/daphnia.geno.mind.king.maf.LD \
      --indep-pairwise 1kb 1 0.9 \
      --out plink/"$RUN"/daphnia --allow-extra-chr
 
-/scicore/home/ebertd/dexter0000/plinkDev/plink2 --bfile plink/"$RUN"/daphnia.geno.mind.king.maf.LD --make-bed --out plink/"$RUN"/daphnia.geno.mind.king.maf --allow-extra-chr
+/scicore/home/ebertd/dexter0000/plinkDev/plink2 --bfile plink/"$RUN"/daphnia.geno.mind.king.maf.LD \
+--make-bed --out plink/"$RUN"/daphnia.geno.mind.king.maf --allow-extra-chr
 
 /scicore/home/ebertd/dexter0000/plinkDev/plink2 --bfile plink/"$RUN"/pasteuria.geno.mind.king.maf.LD \
      --indep-pairwise 1kb 1 0.9 \
      --out plink/"$RUN"/pasteuria --allow-extra-chr
 
-/scicore/home/ebertd/dexter0000/plinkDev/plink2 --bfile plink/"$RUN"/pasteuria.geno.mind.king.maf.LD --make-bed --out plink/"$RUN"/pasteuria.geno.mind.king.maf --allow-extra-chr
+/scicore/home/ebertd/dexter0000/plinkDev/plink2 --bfile plink/"$RUN"/pasteuria.geno.mind.king.maf.LD \
+--make-bed --out plink/"$RUN"/pasteuria.geno.mind.king.maf --allow-extra-chr
 
 #Filter based on HWE
 /scicore/home/ebertd/dexter0000/plinkDev/plink2 --bfile plink/"$RUN"/daphnia.geno.mind.king.maf \
@@ -107,7 +116,8 @@ mkdir plink/"$RUN"/results
 awk 'FNR> 1 {print $2}' plink/"$RUN"/daphnia.geno.mind.king.king.cutoff.in.id > plink/"$RUN"/pheno_sample_include.txt
 
 #Create list of variants that match previous steps
-/scicore/home/ebertd/dexter0000/plinkDev/plink2 --write-snplist --bfile plink/"$RUN"/pasteuria.geno.mind.king.maf.hwe --out plink/"$RUN"/past_variants --allow-extra-chr
+/scicore/home/ebertd/dexter0000/plinkDev/plink2 --write-snplist \
+--bfile plink/"$RUN"/pasteuria.geno.mind.king.maf.hwe --out plink/"$RUN"/past_variants --allow-extra-chr
 
 #The variants list requires some formatting
 awk  '{gsub("_","\t",$0); print;}' plink/"$RUN"/past_variants.snplist > plink/"$RUN"/pheno_variants_include.txt
@@ -150,10 +160,12 @@ Rscript scripts/r_scripts/binary_pheno.R $RUN
      --indep-pairwise 1kb 1 0.2 \
      --out plink/"$RUN"/pasteuria --allow-extra-chr
 
-/scicore/home/ebertd/dexter0000/plinkDev/plink2 --bfile plink/"$RUN"/pasteuria.geno.mind.king.maf.LD --make-bed --out plink/"$RUN"/pasteuria.geno.mind.king.maf.covs --allow-extra-chr --extract plink/"$RUN"/pasteuria.prune.in
+/scicore/home/ebertd/dexter0000/plinkDev/plink2 --bfile plink/"$RUN"/pasteuria.geno.mind.king.maf.LD \
+--make-bed --out plink/"$RUN"/pasteuria.geno.mind.king.maf.covs --allow-extra-chr --extract plink/"$RUN"/pasteuria.prune.in
 
 #Pasteuria PCA. Keep only samples present in daphnia PCA
-/scicore/home/ebertd/dexter0000/plinkDev/plink2 --pca --bfile plink/"$RUN"/pasteuria.geno.mind.king.maf.covs --no-pheno --out plink/"$RUN"/pasteuria --allow-extra-chr
+/scicore/home/ebertd/dexter0000/plinkDev/plink2 --pca --bfile plink/"$RUN"/pasteuria.geno.mind.king.maf.covs \
+--no-pheno --out plink/"$RUN"/pasteuria --allow-extra-chr
 
 #Append label to pasteuria PCs so they don't duplicate daphnia PCs
 sed -i \
@@ -174,9 +186,11 @@ plink/"$RUN"/pasteuria.eigenvec
      --indep-pairwise 1000kb 1 0.2 \
      --out plink/"$RUN"/daphnia --allow-extra-chr
 
-/scicore/home/ebertd/dexter0000/plinkDev/plink2 --bfile plink/"$RUN"/daphnia.geno.mind.king.maf.LD --extract plink/"$RUN"/daphnia.prune.in --make-bed --out plink/"$RUN"/daphnia.geno.mind.king.maf --allow-extra-chr
+/scicore/home/ebertd/dexter0000/plinkDev/plink2 --bfile plink/"$RUN"/daphnia.geno.mind.king.maf.LD \
+--extract plink/"$RUN"/daphnia.prune.in --make-bed --out plink/"$RUN"/daphnia.geno.mind.king.maf --allow-extra-chr
 
-/scicore/home/ebertd/dexter0000/plinkDev/plink2 --pca --bfile plink/"$RUN"/daphnia.geno.mind.king.maf --no-pheno --out plink/"$RUN"/daphnia --allow-extra-chr
+/scicore/home/ebertd/dexter0000/plinkDev/plink2 --pca --bfile plink/"$RUN"/daphnia.geno.mind.king.maf \
+--no-pheno --out plink/"$RUN"/daphnia --allow-extra-chr
 
 #Merge covariate files
 paste plink/"$RUN"/pasteuria.eigenvec plink/"$RUN"/daphnia.eigenvec > plink/"$RUN"/combinedPC.eigenvec
@@ -186,7 +200,10 @@ cut -f13,14 --complement plink/"$RUN"/combinedPC.eigenvec > plink/"$RUN"/combine
 #Association analysis with additive logistic model
 ################################################################################
 
-/scicore/home/ebertd/dexter0000/plinkDev/plink2 --bfile plink/"$RUN"/daphnia.geno.mind.king.maf.hwe --logistic firth-fallback hide-covar log10 --pheno plink/"$RUN"/binaryMerge.phe --out plink/"$RUN"/results/output --allow-extra-chr --no-pheno --pfilter 0.1e-5 --1 --covar plink/"$RUN"/combinedPC.eigenvec --covar-col-nums 13,14,15,16,17,18,19,20,21,22
+/scicore/home/ebertd/dexter0000/plinkDev/plink2 --bfile plink/"$RUN"/daphnia.geno.mind.king.maf.hwe \
+--logistic firth-fallback hide-covar log10 --pheno plink/"$RUN"/binaryMerge.phe \
+--out plink/"$RUN"/results/output --allow-extra-chr --no-pheno --pfilter 0.1e-5 --1 \
+--covar plink/"$RUN"/combinedPC.eigenvec --covar-col-nums 13,14,15,16,17,18,19,20,21,22
 
 #The output needs to be cleaned up a bit before R import.First append the locus name to each ignificant association
 cd plink/"$RUN"/results
@@ -199,7 +216,8 @@ cat output.chr1* > results.txt
 #Delete repeated headers from each file
 sed '1!{/#CHROM/d;}' results.txt > results2.txt
 
-#PLINK outputs contains a variable number of whitespaces between columns so redundant white spaces need to be stripped out before downstream #processing.
+#PLINK outputs contains a variable number of whitespaces between columns 
+#so redundant white spaces need to be stripped out before downstream #processing.
 cat results2.txt | tr -s ' ' > results_"$RUN".txt
 ````
 
@@ -301,8 +319,3 @@ outFile<-paste("/scicore/home/ebertd/dexter0000/interlink/plink/",RUN,"/binaryMe
 
 write.table(binary,outFile,row.names = FALSE, sep = " ",quote =FALSE)
 ````
-
-
-
-
-
