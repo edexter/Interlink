@@ -2,6 +2,7 @@
 
 This script maps the trimmed reads to a reference genome using BWA-MEM. It then converts the SAM output to BAM format, calculates mapping statistics with SAMTOOLS, appends read group data to the alignments, removes duplicate reads, removes unmapped reads, and indexes the BAM. Requires a reference genome and index of input files, which should be the output from step 2 of the pipeline. This entire process is repeated separately, but identically, relative to the pasteuria genome.
 
+## Daphnia
 ````bash
 #!/bin/bash
 
