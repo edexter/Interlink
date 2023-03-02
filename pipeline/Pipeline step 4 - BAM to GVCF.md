@@ -59,7 +59,7 @@ cd /scicore/home/ebertd/dexter0000/interlink
 
 gatk --java-options "-Xmx32G" HaplotypeCaller \
 -R "$REF" \
--I bamsDaphnia/"$SAMP"_daphnia_Rm_rdup_indelrealigner.bam \
+-I bamsDaphnia/"$SAMP"_daphnia_Rm_rdup.bam \
 -ploidy 2 \
 -O gvcfsDaphnia/"$SAMP".vcf \
 -ERC GVCF
@@ -126,7 +126,7 @@ cd /scicore/home/ebertd/dexter0000/interlink
 
 gatk --java-options "-Xmx32G" HaplotypeCaller \
 -R "$REF" \
--I bamsPasteuria/"$SAMP"_pasteuria_Rm_rdup_indelrealigner.bam \
+-I bamsPasteuria/"$SAMP"_pasteuria_Rm_rdup.bam \
 -ploidy 2 \
 -O gvcfsPasteuria/"$SAMP".vcf \
 -ERC GVCF
