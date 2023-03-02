@@ -8,9 +8,9 @@ This script maps the trimmed reads to a reference genome using BWA-MEM. It then 
 #SBATCH --job-name=bam_preparation_daphnia		#Job name
 #SBATCH --cpus-per-task=8	                  	#Number of cores reserved
 #SBATCH --mem-per-cpu=4G              			#Memory reserved per core.
-												#Total memory reserved: 32GB
-#SBATCH --time=168:00:00	        			#Maximum time the job will run
-#SBATCH --qos=1week	           					#The job queue (time based)
+							#Total memory reserved: 32GB
+#SBATCH --time=168:00:00	        		#Maximum time the job will run
+#SBATCH --qos=1week	           			#The job queue (time based)
 
 #This is the stdout file
 #SBATCH --output=/scicore/home/ebertd/dexter0000/interlink/logfiles/daphFq2BamOut_%A_%a
