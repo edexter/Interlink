@@ -10,7 +10,7 @@ First an input VCF file needs to be specified that contains contain only bi-alle
 /scicore/home/ebertd/dexter0000/plinkDev/plink2 --bfile past_single_infection --allow-extra-chr --geno 0.50 --make-bed --out past_single_infection_geno
 
 #Choosing the best value for K using cross vaidation
-for K in 1 2 3 4 5; do admixture --cv past_single_infection_geno.bed $K | tee log${K}.out; done
+for K in 1 2 3 4 5 6 7 8 9 10; do admixture --cv past_single_infection_geno.bed $K | tee log${K}.out; done
 
 #Check the cross-validation results
 grep -h CV log*.out
